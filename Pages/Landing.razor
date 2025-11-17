@@ -1,37 +1,30 @@
 @page "/"
 @layout LandingLayout
-@inject NavigationManager Nav
 
-<div class="landing-hero">
-    <header class="landing-nav">
-        <div class="nav-bar">
-            <div class="nav-logo">
-                <div class="logo-bars">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+<div class="landing">
+    <header class="landing-header">
+        <div class="landing-logo">
+            <div class="logo-bars">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-
-            <button class="login-btn" @onclick="GoToDashboard">
-                Log in with Spotify
-            </button>
         </div>
+
+        <button class="login-button" @onclick="GoToDashboard">
+            Log in with Spotify
+        </button>
     </header>
 
-    <main class="hero-content">
-        <div class="hero-left">
-            <h1 class="hero-title">Statify</h1>
-        </div>
-
-        <div class="hero-right">
-            <p class="hero-text">
-                Discover your Spotify listening habits anytime.<br />
-                Dive into clear, beautiful insights that reveal your top artists,
-                tracks, genres, and more — all in one place.
-            </p>
-        </div>
+    <main class="landing-content">
+        <h1 class="landing-title">Statify</h1>
     </main>
+
+    <p class="landing-subtitle">
+        Discover your Spotify listening habits anytime.<br />
+        Dive into clear, beautiful insights that reveal your top artists,
+        tracks, genres, and more — all in one place.
+    </p>
 
     <footer class="landing-footer">
         no data is stored
@@ -39,6 +32,8 @@
 </div>
 
 @code {
+    [Inject] NavigationManager Nav { get; set; } = default!;
+
     void GoToDashboard()
     {
         Nav.NavigateTo("/dashboard");

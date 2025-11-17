@@ -1,4 +1,4 @@
-.landing-hero {
+.landing-hero[b-8kyhxt9jjt] {
     position: relative;
     min-height: 100vh;
     color: #ffffff;
@@ -11,11 +11,11 @@
 }
 
 /* top bar */
-.landing-nav {
+.landing-nav[b-8kyhxt9jjt] {
     padding: 24px 40px;
 }
 
-.nav-bar {
+.nav-bar[b-8kyhxt9jjt] {
     max-width: 1160px;
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.6);
@@ -26,18 +26,18 @@
     justify-content: space-between;
 }
 
-.nav-logo {
+.nav-logo[b-8kyhxt9jjt] {
     display: flex;
     align-items: center;
 }
 
-.logo-bars {
+.logo-bars[b-8kyhxt9jjt] {
     display: flex;
     gap: 4px;
     align-items: flex-end;     
 }
 
-.logo-bars span {
+.logo-bars span[b-8kyhxt9jjt] {
     display: block;
     width: 9px;
     background: #32D74B;     
@@ -45,12 +45,12 @@
 }
 
 
-.logo-bars span:nth-child(1) { height: 18px; }  
-.logo-bars span:nth-child(2) { height: 30px; }  
-.logo-bars span:nth-child(3) { height: 22px; }  
+.logo-bars span:nth-child(1)[b-8kyhxt9jjt] { height: 18px; }  
+.logo-bars span:nth-child(2)[b-8kyhxt9jjt] { height: 30px; }  
+.logo-bars span:nth-child(3)[b-8kyhxt9jjt] { height: 22px; }  
 
 
-.login-btn {
+.login-btn[b-8kyhxt9jjt] {
     padding: 10px 26px;
     border-radius: 999px;
     border: none;
@@ -61,13 +61,13 @@
     font-size: 14px;
 }
 
-.login-btn:hover {
+.login-btn:hover[b-8kyhxt9jjt] {
     filter: brightness(1.08);
 }
 
 /* hero content */
 
-.hero-content {
+.hero-content[b-8kyhxt9jjt] {
     max-width: 1160px;
     margin: 0 auto;
     padding: 120px 40px 80px;
@@ -76,23 +76,23 @@
     align-items: flex-end;
 }
 
-.hero-left {
+.hero-left[b-8kyhxt9jjt] {
     flex: 1;
 }
 
-.hero-right {
+.hero-right[b-8kyhxt9jjt] {
     flex: 1;
     max-width: 420px;
 }
 
-.hero-title {
+.hero-title[b-8kyhxt9jjt] {
     font-size: 96px;
     line-height: 0.9;
     font-weight: 800;
     margin: 0;
 }
 
-.hero-text {
+.hero-text[b-8kyhxt9jjt] {
     font-size: 16px;
     line-height: 1.6;
     color: #32D74B;
@@ -101,7 +101,7 @@
 
 /* footer */
 
-.landing-footer {
+.landing-footer[b-8kyhxt9jjt] {
     position: absolute;
     left: 50%;
     bottom: 18px;
@@ -112,18 +112,18 @@
 
 /* simpele responsive tweak */
 @media (max-width: 900px) {
-    .hero-content {
+    .hero-content[b-8kyhxt9jjt] {
         flex-direction: column;
         align-items: flex-start;
         padding-top: 80px;
         gap: 40px;
     }
 
-    .hero-title {
+    .hero-title[b-8kyhxt9jjt] {
         font-size: 64px;
     }
 
-    .nav-bar {
+    .nav-bar[b-8kyhxt9jjt] {
         padding-inline: 16px;
     }
 }
