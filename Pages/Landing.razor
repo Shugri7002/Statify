@@ -37,19 +37,20 @@
 </div>
 
 @code {
-    void LoginWithSpotify()
-    {
-        var clientId    = Config["Spotify:ClientId"] ?? string.Empty;
-        var redirectUri = Uri.EscapeDataString(Config["Spotify:RedirectUri"] ?? string.Empty);
-        var scopes      = Uri.EscapeDataString(Config["Spotify:Scopes"] ?? string.Empty);
+void LoginWithSpotify()
+{
+    var clientId    = Config["Spotify:ClientId"] ?? string.Empty;
+    var redirectUri = Uri.EscapeDataString(Config["Spotify:RedirectUri"] ?? string.Empty);
+    var scopes      = Uri.EscapeDataString(Config["Spotify:Scopes"] ?? string.Empty);
 
-        var url =
-            "https://accounts.spotify.com/authorize" +
-            $"?client_id={clientId}" +
-            "&response_type=code" +
-            $"&redirect_uri={redirectUri}" +
-            $"&scope={scopes}";
+    var url =
+        "https://accounts.spotify.com/authorize" +
+        $"?client_id={clientId}" +
+        "&response_type=code" +
+        $"&redirect_uri={redirectUri}" +
+        $"&scope={scopes}" +
+        "&show_dialog=true";   // 👉 altijd Spotify-scherm tonen
 
-        Nav.NavigateTo(url, forceLoad: true);
-    }
+    Nav.NavigateTo(url, forceLoad: true);
+}
 }
