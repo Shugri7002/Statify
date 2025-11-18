@@ -1,6 +1,9 @@
 @page "/"
 @layout LandingLayout
 
+@inject NavigationManager Nav
+@inject IConfiguration Config
+
 <div class="landing">
     <header class="landing-header">
         <div class="landing-logo">
@@ -11,7 +14,7 @@
             </div>
         </div>
 
-        <button class="login-button" @onclick="GoToDashboard">
+        <button class="login-button" @onclick="LoginWithSpotify">
             Log in with Spotify
         </button>
     </header>
@@ -20,11 +23,13 @@
         <h1 class="landing-title">Statify</h1>
     </main>
 
-    <p class="landing-subtitle">
-        Discover your Spotify listening habits anytime.<br />
-        Dive into clear, beautiful insights that reveal your top artists,
-        tracks, genres, and more — all in one place.
-    </p>
+    <div class="landing-subtitle">
+        <p>
+            Discover your Spotify listening habits anytime.
+            Dive into clear, beautiful insights that reveal your top artists,
+            tracks, genres, and more — all in one place.
+        </p>
+    </div>
 
     <footer class="landing-footer">
         no data is stored
@@ -32,10 +37,19 @@
 </div>
 
 @code {
-    [Inject] NavigationManager Nav { get; set; } = default!;
-
-    void GoToDashboard()
+    void LoginWithSpotify()
     {
-        Nav.NavigateTo("/dashboard");
+        var clientId    = Config["Spotify:ClientId"] ?? string.Empty;
+        var redirectUri = Uri.EscapeDataString(Config["Spotify:RedirectUri"] ?? string.Empty);
+        var scopes      = Uri.EscapeDataString(Config["Spotify:Scopes"] ?? string.Empty);
+
+        var url =
+            "https://accounts.spotify.com/authorize" +
+            $"?client_id={clientId}" +
+            "&response_type=code" +
+            $"&redirect_uri={redirectUri}" +
+            $"&scope={scopes}";
+
+        Nav.NavigateTo(url, forceLoad: true);
     }
 }

@@ -32,6 +32,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Shugr/Statify/Pages/AuthCallback.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aENhbGxiYWNrLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Shugr/Statify/Pages/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

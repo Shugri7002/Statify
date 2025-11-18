@@ -1,5 +1,14 @@
 @page "/dashboard"
-@layout MainLayout
+@inject Statify.Services.SpotifyAuthService Auth
 
 <h1>Dashboard</h1>
-<p>Je bent ingelogd! (soort van)</p>
+
+@if (Auth.IsLoggedIn)
+{
+    <p>Je bent ingelogd met Spotify ✅</p>
+    <p>(De authorization code wordt niet meer op het scherm getoond.)</p>
+}
+else
+{
+    <p>Not logged in.</p>
+}

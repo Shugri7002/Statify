@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "Statify",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-9Cx8R25yHihziYoc5otlb8eYA2k16X+zxtDzgKTbwT8=",
+    "hash": "sha256-KyL43awb1qOhDMa9lLcRlRFNfaQyNiDg9yzueJz7jWI=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -146,6 +146,11 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "virtualPath": "Microsoft.Extensions.FileSystemGlobbing.wasm",
         "name": "Microsoft.Extensions.FileSystemGlobbing.4cqycihgg0.wasm",
         "integrity": "sha256-1N2/rCQl/eAmYr1rfjJ32aMFRrX+RN35cCdm1VkbWGo="
+      },
+      {
+        "virtualPath": "Microsoft.Extensions.Http.wasm",
+        "name": "Microsoft.Extensions.Http.apre2arxjd.wasm",
+        "integrity": "sha256-QuJDErvDB3eoqucTTOd2qfeV220MJhQPa35gPi24h3g="
       },
       {
         "virtualPath": "Microsoft.Extensions.Logging.wasm",
@@ -1039,15 +1044,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "Statify.wasm",
-        "name": "Statify.gz7oszb6xp.wasm",
-        "integrity": "sha256-lImcEuhFhfzTgWpwmXto6lZ7UXs12Z5hdmzDXKnYoAI="
+        "name": "Statify.u20yvun10x.wasm",
+        "integrity": "sha256-GmSRzVbGHMuccD+XUpMIkGb9ieIIoWIxY2RCTJaDNVs="
       }
     ],
     "pdb": [
       {
         "virtualPath": "Statify.pdb",
-        "name": "Statify.qslj37952a.pdb",
-        "integrity": "sha256-5tuxuy42cs6PcPvE8TxqS4PL0gwhYT99p13un3qTSEI="
+        "name": "Statify.iag5f6231g.pdb",
+        "integrity": "sha256-ugi+t/mdi75alnxyYapi9Y54UorOBY65cBFy+M8WvDY="
       }
     ],
     "libraryInitializers": [
@@ -1062,6 +1067,9 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
     ]
   },
   "debugLevel": -1,
+  "appsettings": [
+    "../appsettings.json"
+  ],
   "globalizationMode": "sharded",
   "extensions": {
     "blazor": {}

@@ -1,0 +1,59 @@
+@page "/auth/callback"
+@inject NavigationManager Nav
+@inject Statify.Services.SpotifyAuthService Auth
+
+<div class="auth-callback">
+    <h3>Connecting to Spotify…</h3>
+
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <p>@Message</p>
+    }
+</div>
+
+@code {
+    string? Message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var uri   = new Uri(Nav.Uri);
+            var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+            var error = query["error"];
+            var code  = query["code"];
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Message = $"Spotify login failed: {error}";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(code))
+            {
+                Message = "No authorization code was returned by Spotify.";
+                return;
+            }
+
+            // 1) code opslaan
+            Auth.StoreAuthCode(code);
+
+            // 2) code omruilen voor access token
+            var ok = await Auth.ExchangeCodeForTokenAsync();
+
+            if (!ok)
+            {
+                Message = "Kon geen access token ophalen van Spotify.";
+                return;
+            }
+
+            // 3) door naar dashboard
+            Nav.NavigateTo("/dashboard", replace: true);
+        }
+        catch (Exception ex)
+        {
+            Message = $"Something went wrong: {ex.Message}";
+        }
+    }
+}

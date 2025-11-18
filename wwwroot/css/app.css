@@ -1,6 +1,10 @@
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;   /* voorkomt scroll / witte balk */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 h1:focus {
@@ -115,10 +119,6 @@ code {
     text-align: start;
 }
 
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
 
 /* ========================= */
 /*  LANDING PAGE             */
@@ -131,16 +131,17 @@ body {
 
 .landing {
     position: relative;
-    min-height: 100vh;
+    height: 100vh;            /* <-- was min-height */
     color: #ffffff;
     background-color: #000;
-    background-image: url("/img/bg3.0.png"); /* jouw afbeelding */
+    background-image: url("/img/bg3.0.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 24px 40px 32px;
     box-sizing: border-box;
 }
+
 
 /* donkere overlay voor meer contrast */
 .landing::before {
@@ -229,12 +230,10 @@ body {
 
 .landing-content {
     position: absolute;
-    left: 90px;
-    bottom: 130px;      /* titel iets hoger/lager tweak je hier */
+    left: 90px;        /* meer naar links/rechts → pas deze aan */
+    bottom: 150px;     /* hoger/lager → pas deze aan (was 130) */
     max-width: 520px;
 }
-
-/* STATIFY TITEL – Playfair, dunner */
 
 .landing-title {
     font-family: 'Playfair Display' !important;
@@ -244,18 +243,23 @@ body {
     line-height: 1.03;
 }
 
-/* GROENE TEKST RECHTS – lager zoals screenshot */
-
 .landing-subtitle {
     position: absolute;
-    top: 50%;           /* lager/hoger → deze waarde aanpassen */
-    right: 130px;
-    margin: 0;
-    font-size: 0.98rem;
+    top: 60%;                 /* hoger/lager → speel met dit getal (45–55%) */
+    right: 110px;             /* meer naar links → maak dit getal groter */
+    transform: translateY(-50%);
+
+    max-width: 430px;
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1.7;
     color: #1ED760;
-    max-width: 420px;
 }
+
+.landing-subtitle p {
+    margin: 0 0 8px;
+}
+
 
 /* FOOTER TEKST ONDERIN */
 
