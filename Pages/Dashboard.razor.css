@@ -1,0 +1,225 @@
+/* Alles binnen het dashboard */
+.spotify-dashboard {
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* HEADER */
+.sd-header {
+    background: #111;
+    padding: 2rem 3rem 2.5rem;
+    border-bottom: 1px solid #333;
+}
+
+.sd-browser-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.8rem;
+}
+
+.sd-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+/* balkjes zoals jouw logo */
+.logo-bars span {
+    display: block;
+    width: 13px;
+    border-radius: 3px;
+    background: #1ED760;
+}
+
+.logo-bars span:nth-child(1) { height: 22px; }
+.logo-bars span:nth-child(2) { height: 34px; }
+.logo-bars span:nth-child(3) { height: 28px; }
+
+.logo-text {
+    display: block;            /* als je de tekst ook wilt zien */
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+}
+do
+.sd-logout-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: #1db954;
+    color: #000000;
+    cursor: pointer;
+}
+
+.sd-logout-btn:hover {
+    background: #18a347;
+}
+
+.sd-profile {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sd-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: #2b2b2b;
+}
+
+.sd-profile-text h1 {
+    font-size: 5.5rem;
+    margin: 0;
+}
+
+.sd-profile-text p {
+    margin: 0.4rem 0 0;
+    color: #eaeaea;
+}
+
+/* MAIN */
+.sd-main {
+    padding: 2rem 3rem 4rem;
+    background: #181818;
+}
+
+.sd-section {
+    margin-bottom: 2.8rem;
+}
+
+.sd-section-title {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+/* ROWS */
+.sd-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+/* TOP ARTISTS — cirkels 160 x 160 */
+.sd-artist-card {
+    width: 160px;
+    flex: 0 0 160px;
+    text-align: center;
+}
+
+.sd-artist-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 0.6rem;
+    background: #333;
+}
+
+.sd-artist-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.sd-artist-rank {
+    font-size: 1.2rem;
+}
+
+.sd-artist-name {
+    font-size: 1.2rem;
+}
+
+/* TOP TRACKS — vierkanten 160 x 160 */
+.sd-track-card {
+    width: 160px;
+    flex: 0 0 160px;
+    text-align: center;
+    gap: 3rem;
+}
+
+.sd-track-cover {
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 0.6rem;
+    background: #555;
+}
+
+.sd-track-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.sd-track-rank {
+    font-size: 1.2rem;
+}
+
+.sd-track-title {
+    font-size: 1.2rem;
+}
+
+/* TOP GENRES — pills 160 x 80 */
+.sd-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.sd-genre-pill {
+    width: 160px;
+    height: 80px;
+    border-radius: 40px;
+    background: #1db954;
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sd-section-range {
+    margin-bottom: 1.5rem;
+}
+
+.sd-range-selector {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.sd-range-btn {
+    border-radius: 999px;
+    border: 1px solid #444;
+    background: #181818;
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.sd-range-btn.active {
+    border-color: #1db954;
+    background: #1db954;
+    color: #000;
+}
+
+.sd-range-btn:hover {
+    border-color: #1db954;
+}

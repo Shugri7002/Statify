@@ -1,14 +1,262 @@
 @page "/dashboard"
-@inject Statify.Services.SpotifyAuthService Auth
+@using Statify.Services
+@using System.Linq
+@inject SpotifyAuthService SpotifyAuthService
 
-<h1>Dashboard</h1>
-
-@if (Auth.IsLoggedIn)
+@if (isLoading)
 {
-    <p>Je bent ingelogd met Spotify ✅</p>
-    <p>(De authorization code wordt niet meer op het scherm getoond.)</p>
+    <div class="spotify-dashboard">
+        <main class="sd-main">
+            <p>Loading your Spotify data...</p>
+        </main>
+    </div>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="spotify-dashboard">
+        <main class="sd-main">
+            <p style="color:red">@errorMessage</p>
+        </main>
+    </div>
 }
 else
 {
-    <p>Not logged in.</p>
+    <div class="spotify-dashboard">
+        <!-- HEADER -->
+        <header class="sd-header">
+            <div class="sd-browser-bar">
+                <div class="sd-logo">
+                    <div class="logo-bars">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="sd-right-controls">
+                    <div class="sd-status-dot"></div>
+                    <button class="sd-logout-btn">Log out</button>
+                </div>
+            </div>
+
+            <div class="sd-profile">
+                <div class="sd-avatar-wrapper">
+                    <img class="sd-avatar" src="/img/pfp.png" alt="Profile picture" />
+                </div>
+                <div class="sd-profile-text">
+                    <h1>@UserDisplayName</h1>
+                    <p>Your Spotify activity overview</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="sd-main">
+            <!-- TIME RANGE SELECTOR -->
+            <section class="sd-section sd-section-range">
+                <div class="sd-range-selector">
+                    <button class="sd-range-btn @(CurrentTimeRange == ShortTerm ? "active" : "")"
+                            @onclick="@(() => ChangeTimeRange(ShortTerm))">
+                        Last 4 weeks
+                    </button>
+                    <button class="sd-range-btn @(CurrentTimeRange == MediumTerm ? "active" : "")"
+                            @onclick="@(() => ChangeTimeRange(MediumTerm))">
+                        Last 6 months
+                    </button>
+                    <button class="sd-range-btn @(CurrentTimeRange == LongTerm ? "active" : "")"
+                            @onclick="@(() => ChangeTimeRange(LongTerm))">
+                        Last few years
+                    </button>
+                </div>
+            </section>
+
+            <!-- TOP ARTISTS -->
+            <section class="sd-section">
+                <h2 class="sd-section-title">Top Artists</h2>
+                <div class="sd-row sd-row-artists">
+                    @foreach (var artist in TopArtists)
+                    {
+                        <div class="sd-artist-card">
+                            <img class="sd-artist-img" src="@artist.ImageUrl" alt="@artist.Name" />
+                            <div class="sd-artist-text">
+                                <span class="sd-artist-rank">@artist.Rank.</span>
+                                <span class="sd-artist-name">@artist.Name</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <!-- TOP TRACKS -->
+            <section class="sd-section">
+                <h2 class="sd-section-title">Top Tracks</h2>
+                <div class="sd-row sd-row-tracks">
+                    @foreach (var track in TopTracks)
+                    {
+                        <div class="sd-track-card">
+                            <img class="sd-track-cover" src="@track.ImageUrl" alt="@track.Title" />
+                            <div class="sd-track-text">
+                                <span class="sd-track-rank">@track.Rank.</span>
+                                <span class="sd-track-title">@track.Title</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <!-- TOP GENRES -->
+            <section class="sd-section">
+                <h2 class="sd-section-title">Top Genres</h2>
+                <div class="sd-genres">
+                    @foreach (var genre in TopGenres)
+                    {
+                        <span class="sd-genre-pill">@genre</span>
+                    }
+                </div>
+            </section>
+        </main>
+    </div>
+}
+
+@code {
+    // User
+    public string UserDisplayName { get; set; } = "Loading...";
+    public int CurrentYear { get; set; } = DateTime.Now.Year;
+
+    // Time range
+    private const string ShortTerm  = "short_term";   // last 4 weeks
+    private const string MediumTerm = "medium_term";  // last 6 months
+    private const string LongTerm   = "long_term";    // last few years
+
+    public string CurrentTimeRange { get; set; } = MediumTerm;
+    public string CurrentRangeLabel { get; set; } = "Last 6 months";
+
+    // Data
+    public List<ArtistItem> TopArtists { get; set; } = new();
+    public List<TrackItem> TopTracks { get; set; } = new();
+    public List<string> TopGenres { get; set; } = new();
+
+    private bool isLoading = true;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await LoadProfileAsync();
+            await LoadDataForCurrentRangeAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Kon Spotify data niet laden. " + ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task LoadProfileAsync()
+    {
+        var (displayName, _) = await SpotifyAuthService.GetUserProfileAsync();
+
+        UserDisplayName = !string.IsNullOrWhiteSpace(displayName)
+            ? displayName
+            : "Spotify User";
+    }
+
+    private async Task LoadDataForCurrentRangeAsync()
+    {
+        // Top artists
+        var artists = await SpotifyAuthService.GetTopArtistsAsync(7, CurrentTimeRange);
+
+        TopArtists = artists
+            .Select((a, index) =>
+                new ArtistItem(
+                    index + 1,
+                    a.Name,
+                    string.IsNullOrWhiteSpace(a.ImageUrl)
+                        ? "/img/Ellipse-1.png"
+                        : a.ImageUrl))
+            .ToList();
+
+        // Top tracks
+        var tracks = await SpotifyAuthService.GetTopTracksAsync(7, CurrentTimeRange);
+
+        TopTracks = tracks
+            .Select((t, index) =>
+                new TrackItem(
+                    index + 1,
+                    t.Title,
+                    string.IsNullOrWhiteSpace(t.ImageUrl)
+                        ? "/img/Rectangle-1.png"
+                        : t.ImageUrl))
+            .ToList();
+
+        // Genres
+        var allGenres = artists
+            .Where(a => a.Genres != null)
+            .SelectMany(a => a.Genres!)
+            .Where(g => !string.IsNullOrWhiteSpace(g))
+            .ToList();
+
+        if (allGenres.Any())
+        {
+            TopGenres = allGenres
+                .GroupBy(g => g)
+                .OrderByDescending(g => g.Count())
+                .Take(7)
+                .Select(g => g.Key)
+                .ToList();
+        }
+        else
+        {
+            TopGenres = new()
+            {
+                "hip-hop/rap",
+                "rap",
+                "alternative",
+                "melodic rap",
+                "r&b/soul",
+                "hip hop",
+                "uk grime"
+            };
+        }
+    }
+
+    private async Task ChangeTimeRange(string range)
+    {
+        if (CurrentTimeRange == range)
+            return;
+
+        CurrentTimeRange = range;
+
+        CurrentRangeLabel = range switch
+        {
+            ShortTerm  => "Last 4 weeks",
+            MediumTerm => "Last 6 months",
+            LongTerm   => "Last few years",
+            _          => "Last 6 months"
+        };
+
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            await LoadDataForCurrentRangeAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Kon Spotify data niet laden. " + ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    public record ArtistItem(int Rank, string Name, string ImageUrl);
+    public record TrackItem(int Rank, string Title, string ImageUrl);
 }

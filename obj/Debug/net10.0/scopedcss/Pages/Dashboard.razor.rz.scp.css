@@ -1,0 +1,225 @@
+/* Alles binnen het dashboard */
+.spotify-dashboard[b-te005u0et1] {
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* HEADER */
+.sd-header[b-te005u0et1] {
+    background: #111;
+    padding: 2rem 3rem 2.5rem;
+    border-bottom: 1px solid #333;
+}
+
+.sd-browser-bar[b-te005u0et1] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.8rem;
+}
+
+.sd-logo[b-te005u0et1] {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-bars[b-te005u0et1] {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+/* balkjes zoals jouw logo */
+.logo-bars span[b-te005u0et1] {
+    display: block;
+    width: 13px;
+    border-radius: 3px;
+    background: #1ED760;
+}
+
+.logo-bars span:nth-child(1)[b-te005u0et1] { height: 22px; }
+.logo-bars span:nth-child(2)[b-te005u0et1] { height: 34px; }
+.logo-bars span:nth-child(3)[b-te005u0et1] { height: 28px; }
+
+.logo-text[b-te005u0et1] {
+    display: block;            /* als je de tekst ook wilt zien */
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+}
+do
+.sd-logout-btn[b-te005u0et1] {
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: #1db954;
+    color: #000000;
+    cursor: pointer;
+}
+
+.sd-logout-btn:hover[b-te005u0et1] {
+    background: #18a347;
+}
+
+.sd-profile[b-te005u0et1] {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sd-avatar[b-te005u0et1] {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: #2b2b2b;
+}
+
+.sd-profile-text h1[b-te005u0et1] {
+    font-size: 5.5rem;
+    margin: 0;
+}
+
+.sd-profile-text p[b-te005u0et1] {
+    margin: 0.4rem 0 0;
+    color: #eaeaea;
+}
+
+/* MAIN */
+.sd-main[b-te005u0et1] {
+    padding: 2rem 3rem 4rem;
+    background: #181818;
+}
+
+.sd-section[b-te005u0et1] {
+    margin-bottom: 2.8rem;
+}
+
+.sd-section-title[b-te005u0et1] {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+/* ROWS */
+.sd-row[b-te005u0et1] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+/* TOP ARTISTS — cirkels 160 x 160 */
+.sd-artist-card[b-te005u0et1] {
+    width: 160px;
+    flex: 0 0 160px;
+    text-align: center;
+}
+
+.sd-artist-img[b-te005u0et1] {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 0.6rem;
+    background: #333;
+}
+
+.sd-artist-text[b-te005u0et1] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.sd-artist-rank[b-te005u0et1] {
+    font-size: 1.2rem;
+}
+
+.sd-artist-name[b-te005u0et1] {
+    font-size: 1.2rem;
+}
+
+/* TOP TRACKS — vierkanten 160 x 160 */
+.sd-track-card[b-te005u0et1] {
+    width: 160px;
+    flex: 0 0 160px;
+    text-align: center;
+    gap: 3rem;
+}
+
+.sd-track-cover[b-te005u0et1] {
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 0.6rem;
+    background: #555;
+}
+
+.sd-track-text[b-te005u0et1] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.sd-track-rank[b-te005u0et1] {
+    font-size: 1.2rem;
+}
+
+.sd-track-title[b-te005u0et1] {
+    font-size: 1.2rem;
+}
+
+/* TOP GENRES — pills 160 x 80 */
+.sd-genres[b-te005u0et1] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.sd-genre-pill[b-te005u0et1] {
+    width: 160px;
+    height: 80px;
+    border-radius: 40px;
+    background: #1db954;
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sd-section-range[b-te005u0et1] {
+    margin-bottom: 1.5rem;
+}
+
+.sd-range-selector[b-te005u0et1] {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.sd-range-btn[b-te005u0et1] {
+    border-radius: 999px;
+    border: 1px solid #444;
+    background: #181818;
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.sd-range-btn.active[b-te005u0et1] {
+    border-color: #1db954;
+    background: #1db954;
+    color: #000;
+}
+
+.sd-range-btn:hover[b-te005u0et1] {
+    border-color: #1db954;
+}

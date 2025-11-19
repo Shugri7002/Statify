@@ -36,10 +36,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aENhbGxiYWNrLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Shugr/Statify/Pages/Dashboard.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Shugr/Statify/Pages/LandingLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGFuZGluZ0xheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -59,6 +55,10 @@ build_metadata.AdditionalFiles.CssScope = b-krvvb8fm6q
 [C:/Users/Shugr/Statify/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-pnlzucynaq
+
+[C:/Users/Shugr/Statify/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-te005u0et1
 
 [C:/Users/Shugr/Statify/Pages/Landing.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGFuZGluZy5yYXpvcg==
