@@ -33,7 +33,13 @@ namespace Statify.Services
 
         public void StoreAuthCode(string code)
         {
-            AuthCode = code;
+            AuthCode = code;}
+
+            public void Logout()
+{
+    AccessToken = null;
+    AuthCode = null;
+
         }
 
         /// <summary>
@@ -221,4 +227,7 @@ namespace Statify.Services
 
     public record SimpleArtist(string Name, string ImageUrl, IReadOnlyList<string> Genres);
     public record SimpleTrack(string Title, string Artist, string ImageUrl);
+
+    
 }
+

@@ -109,6 +109,7 @@ body[b-krvvb8fm6q] {
     border-bottom: 1px solid #333;
 }
 
+/* bovenste balk met logo + knoppen rechts */
 .sd-browser-bar[b-te005u0et1] {
     display: flex;
     justify-content: space-between;
@@ -116,6 +117,7 @@ body[b-krvvb8fm6q] {
     margin-bottom: 1.8rem;
 }
 
+/* LOGO */
 .sd-logo[b-te005u0et1] {
     display: flex;
     align-items: center;
@@ -124,7 +126,7 @@ body[b-krvvb8fm6q] {
 
 .logo-bars[b-te005u0et1] {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end; /* balkjes uitlijnen aan de onderkant */
     gap: 5px;
 }
 
@@ -136,17 +138,44 @@ body[b-krvvb8fm6q] {
     background: #1ED760;
 }
 
+/* volgorde: kort - lang - middel */
 .logo-bars span:nth-child(1)[b-te005u0et1] { height: 22px; }
 .logo-bars span:nth-child(2)[b-te005u0et1] { height: 34px; }
 .logo-bars span:nth-child(3)[b-te005u0et1] { height: 28px; }
 
 .logo-text[b-te005u0et1] {
-    display: block;            /* als je de tekst ook wilt zien */
+    display: block; /* als je de tekst ook wilt zien */
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.08em;
 }
-do
+
+/* RECHTS IN DE HEADER (Music Match + Log out) */
+.sd-right-controls[b-te005u0et1] {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+/* Music Match button (outline, geen fill) */
+.sd-mm-btn[b-te005u0et1] {
+    border-radius: 999px;
+    padding: 0.5rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1db954;
+    border: 2px solid #1db954;      /* 2px groene stroke */
+    background: transparent;        /* geen fill */
+    cursor: pointer;
+}
+
+.sd-mm-btn:hover[b-te005u0et1] {
+    background: #1db95422; /* heel lichte groene hover */
+}
+
+/* Log out button (groene pill, gevuld) */
 .sd-logout-btn[b-te005u0et1] {
     border: none;
     border-radius: 999px;
@@ -162,10 +191,17 @@ do
     background: #18a347;
 }
 
+/* PROFIEL BLOK */
 .sd-profile[b-te005u0et1] {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+/* wrapper voor pfp */
+.sd-avatar-wrapper[b-te005u0et1] {
+    width: 140px;
+    height: 140px;
 }
 
 .sd-avatar[b-te005u0et1] {
@@ -173,6 +209,8 @@ do
     height: 140px;
     border-radius: 50%;
     background: #2b2b2b;
+    object-fit: cover;
+    display: block;
 }
 
 .sd-profile-text h1[b-te005u0et1] {
@@ -243,7 +281,6 @@ do
     width: 160px;
     flex: 0 0 160px;
     text-align: center;
-    gap: 3rem;
 }
 
 .sd-track-cover[b-te005u0et1] {
@@ -290,6 +327,7 @@ do
     justify-content: center;
 }
 
+/* TIME RANGE SELECTOR */
 .sd-section-range[b-te005u0et1] {
     margin-bottom: 1.5rem;
 }
