@@ -27,25 +27,28 @@ else
         <!-- HEADER -->
         <header class="sd-header">
     <div class="sd-browser-bar">
-        <div class="sd-logo">
-            <div class="logo-bars">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <span class="logo-text">ify</span>
+    <div class="sd-logo">
+        <div class="logo-bars">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-
-        <div class="sd-right-controls">
-        <div class="sd-status-dot"></div>
-           <button class="sd-mm-btn">
-                Music Match
-            </button>
-
-            <button class="sd-logout-btn" @onclick="Logout">Log out</button>
-
-        </div>
+        <span class="logo-text"></span>
     </div>
+
+    <div class="sd-right-controls">
+        <button class="sd-mm-btn"
+                @onclick="@(() => Navigation.NavigateTo("/musicmatch"))">
+            Music Match
+        </button>
+
+        <button class="sd-logout-btn"
+                @onclick="Logout">
+            Log out
+        </button>
+    </div>
+</div>
+
     
 
             <div class="sd-profile">
@@ -273,6 +276,12 @@ else
     SpotifyAuthService.Logout();
     Navigation.NavigateTo("/", true);
 }
+
+private void GoToMusicMatch()
+{
+    Navigation.NavigateTo("/MusicMatch"); // route of the page
+}
+
 
 }
 

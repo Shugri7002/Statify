@@ -1,0 +1,136 @@
+@page "/musicmatch"
+@inject NavigationManager Navigation
+@inject SpotifyAuthService SpotifyAuthService
+
+<div class="mm-root">
+    <!-- Header: SAME logo + button style as dashboard -->
+    <header class="mm-header">
+        <div class="sd-logo" @onclick="GoBackToDashboard">
+            <div class="logo-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="logo-text">ify</span>
+        </div>
+
+        <button class="sd-logout-btn" @onclick="Logout">
+            Log out
+        </button>
+    </header>
+
+    <main class="mm-main">
+        <!-- Main panel -->
+        <section class="mm-panel">
+            <h1>Compare your music taste with a friend</h1>
+            <p class="mm-subtitle">
+                Paste your friend’s Spotify profile link and see how similar your vibes are.
+            </p>
+
+            <label class="mm-input-label">
+                FRIEND’S SPOTIFY PROFILE LINK
+            </label>
+
+            <input class="mm-input"
+                   placeholder="Paste a Spotify profile URL (mocked for now)"
+                   @bind="FriendProfileUrl" />
+
+            <button class="mm-primary-btn"
+                    @onclick="OnCalculateClicked"
+                    disabled="@IsLoading">
+                @(IsLoading ? "Calculating…" : "Calculate match")
+            </button>
+
+            <button type="button"
+                    class="mm-link-btn"
+                    @onclick="GoBackToDashboard">
+                BACK TO DASHBOARD
+            </button>
+        </section>
+
+        @if (HasResult)
+        {
+            <section class="mm-result">
+                <div class="mm-score-circle">
+                    <span class="mm-score-value">@MatchScore%</span>
+                    <span class="mm-score-label">Match</span>
+                </div>
+
+                <div class="mm-columns">
+                    <div class="mm-column">
+                        <h2>Shared artists</h2>
+                        @foreach (var artist in SharedArtists)
+                        {
+                            <div class="mm-row">
+                                <span>@artist</span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mm-column">
+                        <h2>Shared tracks</h2>
+                        @foreach (var track in SharedTracks)
+                        {
+                            <div class="mm-row">
+                                <span>@track</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+    </main>
+</div>
+
+@code
+{
+    private string FriendProfileUrl = string.Empty;
+    private bool IsLoading;
+    private bool HasResult;
+
+    private int MatchScore = 82; // mocked
+    private List<string> SharedArtists = new()
+    {
+        "The Weeknd",
+        "Kendrick Lamar",
+        "Tame Impala",
+        "Tame Impala",
+        "Tame Impala",
+        "Tame Impala",
+        "Tame Impala", 
+    };
+
+    private List<string> SharedTracks = new()
+    {
+        "Blinding Lights – The Weeknd",
+        "LOVE. – Kendrick Lamar",
+        "Borderline – Tame Impala", 
+        "Borderline – Tame Impala",
+        "Borderline – Tame Impala",
+        "Borderline – Tame Impala",
+        "Borderline – Tame Impala", 
+    
+    };
+
+    private async Task OnCalculateClicked()
+    {
+        IsLoading = true;
+        HasResult = false;
+
+        await Task.Delay(700); // fake loading
+
+        HasResult = true;
+        IsLoading = false;
+    }
+
+    private void GoBackToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+   private void Logout()
+    {
+        SpotifyAuthService.Logout();
+        Navigation.NavigateTo("/");
+    }
+}
