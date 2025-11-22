@@ -50,7 +50,7 @@ void LoginWithSpotify()
         "&response_type=code" +
         $"&redirect_uri={redirectUri}" +
         $"&scope={scopes}" +
-        "&show_dialog=true";   // 👉 altijd Spotify-scherm tonen
+        "&show_dialog=true";   
 
     Nav.NavigateTo(url, forceLoad: true);
 }

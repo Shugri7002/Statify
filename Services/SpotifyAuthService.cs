@@ -26,7 +26,7 @@ namespace Statify.Services
         // Authorization code (eenmalig)
         public string? AuthCode { get; private set; }
 
-        // Access token (hier gaan we mee naar de API)
+        // Access token
         public string? AccessToken { get; private set; }
 
         public bool IsLoggedIn => !string.IsNullOrEmpty(AccessToken);
@@ -42,10 +42,8 @@ namespace Statify.Services
 
         }
 
-        /// <summary>
         /// Wisselt de authorization code om voor een access token.
         /// Wordt aangeroepen in je AuthCallback.
-        /// </summary>
         public async Task<bool> ExchangeCodeForTokenAsync()
         {
             if (string.IsNullOrEmpty(AuthCode))

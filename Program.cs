@@ -1,26 +1,31 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Statify;
-using Statify.Services; // ← waar je Spotify-services staan
+using Statify.Services;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
-
-// HttpClient voor API calls
-builder.Services.AddScoped(sp => new HttpClient
+namespace Statify
 {
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-});
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-// >>> HIER al je eigen services registreren <<<
-// pas aan aan de namen die je echt hebt
-builder.Services.AddScoped<SpotifyAuthService>();
+            builder.RootComponents.Add<App>("#app");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// als je een MusicMatchService hebt:
-// builder.Services.AddScoped<MusicMatchService>();
+            builder.Services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            });
 
-await builder.Build().RunAsync();
+            builder.Services.AddScoped<SpotifyAuthService>();
+        
+
+            await builder.Build().RunAsync();
+        }
+    }
+}

@@ -119,9 +119,7 @@ code {
 }
 
 
-/* ========================= */
 /*  LANDING PAGE             */
-/* ========================= */
 
 body {
     margin: 0;
@@ -130,7 +128,7 @@ body {
 
 .landing {
     position: relative;
-    height: 100vh;            /* <-- was min-height */
+    height: 100vh;            
     color: #ffffff;
     background-color: #000;
     background-image: url("/img/bg3.0.png");
@@ -142,7 +140,7 @@ body {
 }
 
 
-/* donkere overlay voor meer contrast */
+/* donkere overlay */
 .landing::before {
     content: "";
     position: absolute;
@@ -188,7 +186,6 @@ body {
     gap: 5px;
 }
 
-/* balkjes zoals jouw logo */
 .logo-bars span {
     display: block;
     width: 13px;
@@ -201,7 +198,7 @@ body {
 .logo-bars span:nth-child(3) { height: 28px; }
 
 .logo-text {
-    display: none; /* jij gebruikt alleen het icoontje */
+    display: none; 
 }
 
 /* LOGIN BUTTON RECHTS BOVEN */
@@ -229,8 +226,8 @@ body {
 
 .landing-content {
     position: absolute;
-    left: 90px;        /* meer naar links/rechts → pas deze aan */
-    bottom: 150px;     /* hoger/lager → pas deze aan (was 130) */
+    left: 90px;        
+    bottom: 150px;     
     max-width: 520px;
 }
 
@@ -244,8 +241,8 @@ body {
 
 .landing-subtitle {
     position: absolute;
-    top: 60%;                 /* hoger/lager → speel met dit getal (45–55%) */
-    right: 110px;             /* meer naar links → maak dit getal groter */
+    top: 60%;                 
+    right: 110px;       
     transform: translateY(-50%);
 
     max-width: 430px;
