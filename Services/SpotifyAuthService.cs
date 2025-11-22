@@ -26,20 +26,24 @@ namespace Statify.Services
         // Authorization code (eenmalig)
         public string? AuthCode { get; private set; }
 
-        // Access token (hier gaan we mee naar de API)
+        // Access token
         public string? AccessToken { get; private set; }
 
         public bool IsLoggedIn => !string.IsNullOrEmpty(AccessToken);
 
         public void StoreAuthCode(string code)
         {
-            AuthCode = code;
+            AuthCode = code;}
+
+            public void Logout()
+{
+    AccessToken = null;
+    AuthCode = null;
+
         }
 
-        /// <summary>
         /// Wisselt de authorization code om voor een access token.
         /// Wordt aangeroepen in je AuthCallback.
-        /// </summary>
         public async Task<bool> ExchangeCodeForTokenAsync()
         {
             if (string.IsNullOrEmpty(AuthCode))
@@ -221,4 +225,7 @@ namespace Statify.Services
 
     public record SimpleArtist(string Name, string ImageUrl, IReadOnlyList<string> Genres);
     public record SimpleTrack(string Title, string Artist, string ImageUrl);
+
+    
 }
+

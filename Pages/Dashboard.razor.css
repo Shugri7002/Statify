@@ -13,6 +13,7 @@
     border-bottom: 1px solid #333;
 }
 
+/* bovenste balk met logo + knoppen rechts */
 .sd-browser-bar {
     display: flex;
     justify-content: space-between;
@@ -20,6 +21,7 @@
     margin-bottom: 1.8rem;
 }
 
+/* LOGO */
 .sd-logo {
     display: flex;
     align-items: center;
@@ -28,11 +30,11 @@
 
 .logo-bars {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end; 
     gap: 5px;
 }
 
-/* balkjes zoals jouw logo */
+
 .logo-bars span {
     display: block;
     width: 13px;
@@ -45,12 +47,38 @@
 .logo-bars span:nth-child(3) { height: 28px; }
 
 .logo-text {
-    display: block;            /* als je de tekst ook wilt zien */
+    display: block; 
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.08em;
 }
-do
+
+/* RECHTS IN DE HEADER (Music Match + Log out) */
+.sd-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+/* Music Match button */
+.sd-mm-btn {
+    border-radius: 999px;
+    padding: 0.5rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1db954;
+    border: 2px solid #1db954;      
+    background: transparent;        
+    cursor: pointer;
+}
+
+.sd-mm-btn:hover {
+    background: #1db95422; 
+}
+
+/* Log out button */
 .sd-logout-btn {
     border: none;
     border-radius: 999px;
@@ -66,10 +94,17 @@ do
     background: #18a347;
 }
 
+/* PROFIEL BLOK */
 .sd-profile {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+/* wrapper voor pfp */
+.sd-avatar-wrapper {
+    width: 140px;
+    height: 140px;
 }
 
 .sd-avatar {
@@ -77,6 +112,8 @@ do
     height: 140px;
     border-radius: 50%;
     background: #2b2b2b;
+    object-fit: cover;
+    display: block;
 }
 
 .sd-profile-text h1 {
@@ -111,7 +148,7 @@ do
     gap: 3rem;
 }
 
-/* TOP ARTISTS — cirkels 160 x 160 */
+/* TOP ARTISTS  */
 .sd-artist-card {
     width: 160px;
     flex: 0 0 160px;
@@ -147,7 +184,6 @@ do
     width: 160px;
     flex: 0 0 160px;
     text-align: center;
-    gap: 3rem;
 }
 
 .sd-track-cover {
@@ -174,7 +210,7 @@ do
     font-size: 1.2rem;
 }
 
-/* TOP GENRES — pills 160 x 80 */
+/* TOP GENRES */
 .sd-genres {
     display: flex;
     flex-wrap: wrap;
@@ -194,6 +230,7 @@ do
     justify-content: center;
 }
 
+/* TIME RANGE SELECTOR */
 .sd-section-range {
     margin-bottom: 1.5rem;
 }

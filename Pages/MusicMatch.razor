@@ -1,0 +1,544 @@
+@page "/musicmatch"
+@using Statify.Services
+@inject NavigationManager Navigation
+@inject SpotifyAuthService SpotifyAuthService
+
+<div class="mm-root">
+    <!-- HEADER -->
+    <header class="mm-header">
+        <div class="sd-logo" @onclick="GoDashboard">
+            <div class="logo-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="logo-text">ify</span>
+        </div>
+
+        <button class="sd-logout-btn" @onclick="Logout">
+            Log out
+        </button>
+    </header>
+
+    <!-- MAIN -->
+    <main class="mm-main">
+        <!-- TOP PANEL -->
+        <section class="mm-panel">
+            <h1>Music Match</h1>
+            <p class="mm-subtitle">
+                Compare any two Spotify timeframes of your listening history.
+            </p>
+
+            <!-- TIMEFRAME SELECT -->
+            <div class="mm-timeframe-row">
+                <span class="mm-choose-label">Choose two</span>
+
+                <div class="mm-timeframe-buttons">
+                    <button class="mm-chip @(IsSelected(Tf4Weeks) ? "mm-chip-active" : "")"
+                            @onclick="@(() => ToggleSelection(Tf4Weeks))">
+                        Last 4 weeks
+                    </button>
+
+                    <button class="mm-chip @(IsSelected(Tf6Months) ? "mm-chip-active" : "")"
+                            @onclick="@(() => ToggleSelection(Tf6Months))">
+                        Last 6 months
+                    </button>
+
+                    <button class="mm-chip @(IsSelected(TfAllTime) ? "mm-chip-active" : "")"
+                            @onclick="@(() => ToggleSelection(TfAllTime))">
+                        All time
+                    </button>
+                </div>
+            </div>
+
+            <!-- INFO / HELP TEXT -->
+            <p class="mm-help-text">
+                @InfoText
+            </p>
+
+            <!-- BUTTON BEFORE FIRST RESULT -->
+            @if (!ShowResult)
+            {
+                <button class="mm-primary-btn"
+                        disabled="@IsBusy"
+                        @onclick="CalculateMatchAsync">
+                    @(IsBusy ? "Calculating..." : "Calculate match")
+                </button>
+            }
+
+            <!-- RESULT -->
+            @if (ShowResult)
+            {
+                <div class="mm-score-wrapper">
+                    <div class="mm-score-circle">
+                        <span class="mm-score-value">@MatchScore%</span>
+                        <span class="mm-score-label">MATCH</span>
+                    </div>
+
+                    <p class="mm-score-text">
+                        @MatchMessage
+                    </p>
+
+                    <!-- BUTTON UNDER THE PERCENTAGE -->
+                    <button class="mm-primary-btn mm-main-btn"
+                            disabled="@IsBusy"
+                            @onclick="CalculateMatchAsync">
+                        @(IsBusy ? "Calculating..." : "Recalculate match")
+                    </button>
+                </div>
+            }
+        </section>
+
+        @if (ShowResult)
+        {
+            <!-- TOP ARTISTS -->
+            <section class="mm-section">
+                <h2 class="mm-section-title">Top artists</h2>
+                <p class="mm-subheading">
+                    Comparing your @LabelFor(SelectedTf1) vs @LabelFor(SelectedTf2) top artists.
+                </p>
+
+                <div class="mm-compare-grid">
+                    <div class="mm-column-large mm-card-fade">
+                        <p class="mm-column-title">@LabelFor(SelectedTf1) top artists</p>
+                        @if (GetArtist(SelectedTf1, ArtistIndex) is SimpleArtist a1)
+                        {
+                            <div class="mm-artist-row">
+                                <img src="@a1.ImageUrl" alt="@a1.Name" class="mm-artist-img" />
+                                <div class="mm-artist-text">
+                                    <span class="mm-rank">@((ArtistIndex + 1)).</span>
+                                    <span class="mm-name">@a1.Name</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="mm-empty">No artist data.</p>
+                        }
+                    </div>
+
+                    <div class="mm-column-large mm-card-fade">
+                        <p class="mm-column-title">@LabelFor(SelectedTf2) top artists</p>
+                        @if (GetArtist(SelectedTf2, ArtistIndex) is SimpleArtist a2)
+                        {
+                            <div class="mm-artist-row">
+                                <img src="@a2.ImageUrl" alt="@a2.Name" class="mm-artist-img" />
+                                <div class="mm-artist-text">
+                                    <span class="mm-rank">@((ArtistIndex + 1)).</span>
+                                    <span class="mm-name">@a2.Name</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="mm-empty">No artist data.</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="mm-nav-row">
+                    <button class="mm-arrow @(ArtistLeftActive ? "mm-arrow-active" : "")"
+                            @onclick="PrevArtist">
+                        ❮
+                    </button>
+                    <span class="mm-nav-index">
+                        @((ArtistIndex + 1)) / @ArtistMax
+                    </span>
+                    <button class="mm-arrow @(ArtistRightActive ? "mm-arrow-active" : "")"
+                            @onclick="NextArtist">
+                        ❯
+                    </button>
+                </div>
+            </section>
+
+            <!-- TOP TRACKS -->
+            <section class="mm-section">
+                <h2 class="mm-section-title">Top tracks</h2>
+                <p class="mm-subheading">
+                    Comparing your @LabelFor(SelectedTf1) vs @LabelFor(SelectedTf2) top tracks.
+                </p>
+
+                <div class="mm-compare-grid">
+                    <div class="mm-column-large mm-card-fade">
+                        <p class="mm-column-title">@LabelFor(SelectedTf1) top tracks</p>
+                        @if (GetTrack(SelectedTf1, TrackIndex) is SimpleTrack t1)
+                        {
+                            <div class="mm-track-row">
+                                <img src="@t1.ImageUrl" alt="@t1.Title" class="mm-track-cover" />
+                                <div class="mm-track-text">
+                                    <span class="mm-rank">@((TrackIndex + 1)).</span>
+                                    <span class="mm-name">@t1.Title</span>
+                                    <span class="mm-sub">@t1.Artist</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="mm-empty">No track data.</p>
+                        }
+                    </div>
+
+                    <div class="mm-column-large mm-card-fade">
+                        <p class="mm-column-title">@LabelFor(SelectedTf2) top tracks</p>
+                        @if (GetTrack(SelectedTf2, TrackIndex) is SimpleTrack t2)
+                        {
+                            <div class="mm-track-row">
+                                <img src="@t2.ImageUrl" alt="@t2.Title" class="mm-track-cover" />
+                                <div class="mm-track-text">
+                                    <span class="mm-rank">@((TrackIndex + 1)).</span>
+                                    <span class="mm-name">@t2.Title</span>
+                                    <span class="mm-sub">@t2.Artist</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="mm-empty">No track data.</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="mm-nav-row">
+                    <button class="mm-arrow @(TrackLeftActive ? "mm-arrow-active" : "")"
+                            @onclick="PrevTrack">
+                        ❮
+                    </button>
+                    <span class="mm-nav-index">
+                        @((TrackIndex + 1)) / @TrackMax
+                    </span>
+                    <button class="mm-arrow @(TrackRightActive ? "mm-arrow-active" : "")"
+                            @onclick="NextTrack">
+                        ❯
+                    </button>
+                </div>
+            </section>
+
+            <!-- TOP GENRES -->
+            <section class="mm-section">
+                <h2 class="mm-section-title">Top genres</h2>
+                <p class="mm-subheading">
+                    Based on your top artists in each timeframe.
+                </p>
+
+                <div class="mm-compare-grid">
+                    <div class="mm-column-large">
+                        <p class="mm-column-title">@LabelFor(SelectedTf1) genres</p>
+                        <div class="mm-genres-row">
+                            @foreach (var g in GetGenres(SelectedTf1))
+                            {
+                                <span class="mm-genre-pill">@g</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="mm-column-large">
+                        <p class="mm-column-title">@LabelFor(SelectedTf2) genres</p>
+                        <div class="mm-genres-row">
+                            @foreach (var g in GetGenres(SelectedTf2))
+                            {
+                                <span class="mm-genre-pill">@g</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    </main>
+</div>
+
+@code {
+    // ---- Spotify timeframes ----
+    private const string Tf4Weeks  = "short_term";
+    private const string Tf6Months = "medium_term";
+    private const string TfAllTime = "long_term";
+
+    // label mapping
+    private readonly Dictionary<string, string> _labels = new()
+    {
+        { Tf4Weeks,  "Last 4 weeks" },
+        { Tf6Months, "Last 6 months" },
+        { TfAllTime, "All time" }
+    };
+
+    // selected timeframes
+    private string SelectedTf1 = Tf4Weeks;
+    private string SelectedTf2 = Tf6Months;
+
+    // data per timeframe
+    private readonly Dictionary<string, List<SimpleArtist>> ArtistsPerTf = new();
+    private readonly Dictionary<string, List<SimpleTrack>>  TracksPerTf  = new();
+    private readonly Dictionary<string, List<string>>       GenresPerTf  = new();
+
+    // UI state
+    private bool IsBusy;
+    private bool ShowResult;
+    private string InfoText = "Select two different timeframes above .";
+
+    private int MatchScore;
+    private string MatchMessage = string.Empty;
+
+    private int ArtistIndex;
+    private int TrackIndex;
+
+    private bool ArtistLeftActive;
+    private bool ArtistRightActive;
+    private bool TrackLeftActive;
+    private bool TrackRightActive;
+
+    private int ArtistMax => Math.Max(
+        Math.Min(GetCount(ArtistsPerTf, SelectedTf1), GetCount(ArtistsPerTf, SelectedTf2)),
+        1);
+
+    private int TrackMax => Math.Max(
+        Math.Min(GetCount(TracksPerTf, SelectedTf1), GetCount(TracksPerTf, SelectedTf2)),
+        1);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!SpotifyAuthService.IsLoggedIn)
+        {
+            Navigation.NavigateTo("/");
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            await LoadAllTimeframesAsync();
+            InfoText = "Select two different timeframes and press.";
+        }
+        catch
+        {
+            InfoText = "Couldn't load your Spotify data. Try refreshing or logging in again.";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    // ---------- DATA LOADING ----------
+
+    private async Task LoadAllTimeframesAsync()
+    {
+        var tArtistsShort  = SpotifyAuthService.GetTopArtistsAsync(7, Tf4Weeks);
+        var tArtistsMedium = SpotifyAuthService.GetTopArtistsAsync(7, Tf6Months);
+        var tArtistsLong   = SpotifyAuthService.GetTopArtistsAsync(7, TfAllTime);
+
+        var tTracksShort   = SpotifyAuthService.GetTopTracksAsync(7, Tf4Weeks);
+        var tTracksMedium  = SpotifyAuthService.GetTopTracksAsync(7, Tf6Months);
+        var tTracksLong    = SpotifyAuthService.GetTopTracksAsync(7, TfAllTime);
+
+        await Task.WhenAll(
+            tArtistsShort, tArtistsMedium, tArtistsLong,
+            tTracksShort,  tTracksMedium,  tTracksLong);
+
+        ArtistsPerTf[Tf4Weeks]  = tArtistsShort.Result;
+        ArtistsPerTf[Tf6Months] = tArtistsMedium.Result;
+        ArtistsPerTf[TfAllTime] = tArtistsLong.Result;
+
+        TracksPerTf[Tf4Weeks]   = tTracksShort.Result;
+        TracksPerTf[Tf6Months]  = tTracksMedium.Result;
+        TracksPerTf[TfAllTime]  = tTracksLong.Result;
+
+        BuildGenresForAll();
+    }
+
+    private void BuildGenresForAll()
+    {
+        GenresPerTf.Clear();
+
+        foreach (var tf in new[] { Tf4Weeks, Tf6Months, TfAllTime })
+        {
+            if (!ArtistsPerTf.TryGetValue(tf, out var artists) || artists.Count == 0)
+            {
+                GenresPerTf[tf] = new List<string>();
+                continue;
+            }
+
+            var topGenres = artists
+                .SelectMany(a => a.Genres ?? Array.Empty<string>())
+                .GroupBy(g => g.ToLowerInvariant())
+                .OrderByDescending(g => g.Count())
+                .Take(3)
+                .Select(g => CultureFirstLetter(g.Key))
+                .ToList();
+
+            GenresPerTf[tf] = topGenres;
+        }
+    }
+
+    private static string CultureFirstLetter(string input)
+        => string.IsNullOrWhiteSpace(input)
+            ? input
+            : char.ToUpper(input[0]) + input[1..];
+
+    // ---------- MATCH CALCULATION ----------
+
+    private async Task CalculateMatchAsync()
+    {
+        if (SelectedTf1 == SelectedTf2)
+        {
+            InfoText = "Please select two *different* timeframes.";
+            ShowResult = false;
+            return;
+        }
+
+        if (!ArtistsPerTf.ContainsKey(SelectedTf1) || !ArtistsPerTf.ContainsKey(SelectedTf2))
+        {
+            IsBusy = true;
+            try
+            {
+                await LoadAllTimeframesAsync();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        var artists1 = ArtistsPerTf.GetValueOrDefault(SelectedTf1, new());
+        var artists2 = ArtistsPerTf.GetValueOrDefault(SelectedTf2, new());
+
+        var tracks1  = TracksPerTf.GetValueOrDefault(SelectedTf1, new());
+        var tracks2  = TracksPerTf.GetValueOrDefault(SelectedTf2, new());
+
+        // simple overlap scoring
+        var sharedArtists = artists1
+            .Where(a1 => artists2.Any(a2 =>
+                string.Equals(a1.Name, a2.Name, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+
+        var sharedTracks = tracks1
+            .Where(t1 => tracks2.Any(t2 =>
+                string.Equals(t1.Title,  t2.Title,  StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(t1.Artist, t2.Artist, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+
+        var score = 30;
+        score += Math.Min(sharedArtists.Count * 6, 30);
+        score += Math.Min(sharedTracks.Count * 4, 30);
+
+        // genre overlap
+        var g1 = new HashSet<string>(GetGenres(SelectedTf1)
+            .Select(g => g.ToLowerInvariant()));
+        var g2 = new HashSet<string>(GetGenres(SelectedTf2)
+            .Select(g => g.ToLowerInvariant()));
+
+        g1.IntersectWith(g2);
+        score += Math.Min(g1.Count * 5, 10);
+
+        if (score > 99) score = 99;
+        MatchScore = score;
+
+        MatchMessage = score switch
+        {
+            >= 85 => "Huge overlap between these timeframes – super consistent taste.",
+            >= 65 => "Strong overlap with some unique differences in each timeframe.",
+            >= 45 => "Some overlap, but also quite different moods.",
+            _     => "Very different vibes between these two timeframes."
+        };
+
+        ArtistIndex = 0;
+        TrackIndex  = 0;
+        ArtistLeftActive = ArtistRightActive = false;
+        TrackLeftActive  = TrackRightActive  = false;
+
+        ShowResult = true;
+        InfoText   = string.Empty;
+    }
+
+    // ---------- NAVIGATION ----------
+
+    private void PrevArtist()
+    {
+        ArtistLeftActive  = true;
+        ArtistRightActive = false;
+
+        if (ArtistIndex > 0)
+        {
+            ArtistIndex--;
+        }
+    }
+
+    private void NextArtist()
+    {
+        ArtistLeftActive  = false;
+        ArtistRightActive = true;
+
+        if (ArtistIndex < ArtistMax - 1)
+        {
+            ArtistIndex++;
+        }
+    }
+
+    private void PrevTrack()
+    {
+        TrackLeftActive  = true;
+        TrackRightActive = false;
+
+        if (TrackIndex > 0)
+        {
+            TrackIndex--;
+        }
+    }
+
+    private void NextTrack()
+    {
+        TrackLeftActive  = false;
+        TrackRightActive = true;
+
+        if (TrackIndex < TrackMax - 1)
+        {
+            TrackIndex++;
+        }
+    }
+
+    // ---------- HELPERS ----------
+
+    private static int GetCount<T>(Dictionary<string, List<T>> map, string key)
+        => map.TryGetValue(key, out var list) ? list.Count : 0;
+
+    private SimpleArtist? GetArtist(string tf, int index)
+    {
+        if (!ArtistsPerTf.TryGetValue(tf, out var list)) return null;
+        return index >= 0 && index < list.Count ? list[index] : null;
+    }
+
+    private SimpleTrack? GetTrack(string tf, int index)
+    {
+        if (!TracksPerTf.TryGetValue(tf, out var list)) return null;
+        return index >= 0 && index < list.Count ? list[index] : null;
+    }
+
+    private IEnumerable<string> GetGenres(string tf)
+        => GenresPerTf.TryGetValue(tf, out var list) ? list : Enumerable.Empty<string>();
+
+    private string LabelFor(string tf)
+        => _labels.TryGetValue(tf, out var label) ? label : tf;
+
+    private bool IsSelected(string tf)
+        => tf == SelectedTf1 || tf == SelectedTf2;
+
+    private void ToggleSelection(string tf)
+    {
+        // if it's already selected, leave it as is (or swap if both same)
+        if (tf == SelectedTf1 && tf != SelectedTf2) return;
+        if (tf == SelectedTf2 && tf != SelectedTf1) return;
+
+        // if both are same, change second
+        if (SelectedTf1 == SelectedTf2)
+        {
+            if (tf != SelectedTf1)
+                SelectedTf2 = tf;
+            return;
+        }
+
+        // otherwise: choose which one to replace (the older one)
+        SelectedTf1 = SelectedTf2;
+        SelectedTf2 = tf;
+    }
+
+    private void GoDashboard() => Navigation.NavigateTo("/dashboard");
+    private void Logout()      => Navigation.NavigateTo("/");
+}

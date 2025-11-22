@@ -1,20 +1,31 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Statify;
 using Statify.Services;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
+namespace Statify
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+            builder.RootComponents.Add<App>("#app");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Standaard HttpClient voor API-calls
-builder.Services.AddScoped(sp =>
-    new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            });
 
-// Onze SpotifyAuthService (krijgt HttpClient via DI)
-builder.Services.AddScoped<SpotifyAuthService>();
+            builder.Services.AddScoped<SpotifyAuthService>();
+        
 
-await builder.Build().RunAsync();
+            await builder.Build().RunAsync();
+        }
+    }
+}

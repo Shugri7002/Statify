@@ -2,6 +2,8 @@
 @using Statify.Services
 @using System.Linq
 @inject SpotifyAuthService SpotifyAuthService
+@inject NavigationManager Navigation
+
 
 @if (isLoading)
 {
@@ -24,20 +26,30 @@ else
     <div class="spotify-dashboard">
         <!-- HEADER -->
         <header class="sd-header">
-            <div class="sd-browser-bar">
-                <div class="sd-logo">
-                    <div class="logo-bars">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+    <div class="sd-browser-bar">
+    <div class="sd-logo">
+        <div class="logo-bars">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <span class="logo-text"></span>
+    </div>
 
-                <div class="sd-right-controls">
-                    <div class="sd-status-dot"></div>
-                    <button class="sd-logout-btn">Log out</button>
-                </div>
-            </div>
+    <div class="sd-right-controls">
+        <button class="sd-mm-btn"
+                @onclick="@(() => Navigation.NavigateTo("/musicmatch"))">
+            Music Match
+        </button>
+
+        <button class="sd-logout-btn"
+                @onclick="Logout">
+            Log out
+        </button>
+    </div>
+</div>
+
+    
 
             <div class="sd-profile">
                 <div class="sd-avatar-wrapper">
@@ -259,4 +271,17 @@ else
 
     public record ArtistItem(int Rank, string Name, string ImageUrl);
     public record TrackItem(int Rank, string Title, string ImageUrl);
+    private void Logout()
+{
+    SpotifyAuthService.Logout();
+    Navigation.NavigateTo("/", true);
 }
+
+private void GoToMusicMatch()
+{
+    Navigation.NavigateTo("/MusicMatch"); // route of the page
+}
+
+
+}
+
