@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "Statify",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-lOcl3m1OlcIXQ4jXpXa6G3Ojex4MMKLR0RYd0wYTnHg=",
+    "hash": "sha256-91B1f0BBtqLSXMHB8+iNP1Z4Y599AWKcwBjPjWuhNSc=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -1044,15 +1044,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "Statify.wasm",
-        "name": "Statify.nudybvfhb8.wasm",
-        "integrity": "sha256-n3Frz9ORgCtuhn52FHby+O8kO/+k5OriLJy0kht24o8="
+        "name": "Statify.duv1yeskfb.wasm",
+        "integrity": "sha256-dXH70VCA3IMbRY/n15EeLgGLBD6I4UtmkxibcUKz6oY="
       }
     ],
     "pdb": [
       {
         "virtualPath": "Statify.pdb",
-        "name": "Statify.g0y3k3ftyq.pdb",
-        "integrity": "sha256-EIEzrossARW+dshQai1fdviTmTTC/UtIri4JSPupcVM="
+        "name": "Statify.x4pm5gay3y.pdb",
+        "integrity": "sha256-wa3gzO25oDIsdSm8ezEjSaWPtgzRbotTojoQi5sRXPk="
       }
     ],
     "libraryInitializers": [

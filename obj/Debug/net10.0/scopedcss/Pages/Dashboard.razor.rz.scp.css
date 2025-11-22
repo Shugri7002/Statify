@@ -30,11 +30,11 @@
 
 .logo-bars[b-te005u0et1] {
     display: flex;
-    align-items: flex-end; /* balkjes uitlijnen aan de onderkant */
+    align-items: flex-end; 
     gap: 5px;
 }
 
-/* balkjes zoals jouw logo */
+
 .logo-bars span[b-te005u0et1] {
     display: block;
     width: 13px;
@@ -42,13 +42,12 @@
     background: #1ED760;
 }
 
-/* volgorde: kort - lang - middel */
 .logo-bars span:nth-child(1)[b-te005u0et1] { height: 22px; }
 .logo-bars span:nth-child(2)[b-te005u0et1] { height: 34px; }
 .logo-bars span:nth-child(3)[b-te005u0et1] { height: 28px; }
 
 .logo-text[b-te005u0et1] {
-    display: block; /* als je de tekst ook wilt zien */
+    display: block; 
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.08em;
@@ -63,23 +62,23 @@
 
 
 
-/* Music Match button (outline, geen fill) */
+/* Music Match button */
 .sd-mm-btn[b-te005u0et1] {
     border-radius: 999px;
     padding: 0.5rem 1.6rem;
     font-size: 0.95rem;
     font-weight: 600;
     color: #1db954;
-    border: 2px solid #1db954;      /* 2px groene stroke */
-    background: transparent;        /* geen fill */
+    border: 2px solid #1db954;      
+    background: transparent;        
     cursor: pointer;
 }
 
 .sd-mm-btn:hover[b-te005u0et1] {
-    background: #1db95422; /* heel lichte groene hover */
+    background: #1db95422; 
 }
 
-/* Log out button (groene pill, gevuld) */
+/* Log out button */
 .sd-logout-btn[b-te005u0et1] {
     border: none;
     border-radius: 999px;
@@ -149,7 +148,7 @@
     gap: 3rem;
 }
 
-/* TOP ARTISTS — cirkels 160 x 160 */
+/* TOP ARTISTS  */
 .sd-artist-card[b-te005u0et1] {
     width: 160px;
     flex: 0 0 160px;
@@ -211,7 +210,7 @@
     font-size: 1.2rem;
 }
 
-/* TOP GENRES — pills 160 x 80 */
+/* TOP GENRES */
 .sd-genres[b-te005u0et1] {
     display: flex;
     flex-wrap: wrap;
